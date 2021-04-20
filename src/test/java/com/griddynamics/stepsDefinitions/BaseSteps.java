@@ -8,6 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -61,16 +64,26 @@ abstract class BaseSteps {
         }
     }
 
+    protected String generateRandomEmail() {
+        String[] domens = new String[]{".ru", ".com"};
+        return generateRandomString(64, 1) + "@" +
+                generateRandomString(5, 1) + domens[(int) (Math.random() * domens.length)];
+
+    }
+
+
     protected String generateDateString() {
-        long rangebegin = Timestamp.valueOf("2013-02-08 00:00").getTime();
-        long rangeend = Timestamp.valueOf("2013-02-08 00:58").getTime();
-        long diff = rangeend - rangebegin + 1;
-        Timestamp rand = new Timestamp(rangebegin + (long) (Math.random() * diff));
-        return rand.toString();
+        LocalDateTime rangeEnd = LocalDateTime.now().minusMinutes(1);
+        LocalDateTime rangeStart = rangeEnd.minusYears(71);
+
+        long diffInMillis = rangeEnd.toEpochSecond(ZoneOffset.UTC) - rangeStart.toEpochSecond(ZoneOffset.UTC);
+        long resultInMillis = (long) (rangeStart.toEpochSecond(ZoneOffset.UTC) + Math.random() * diffInMillis);
+
+        LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(resultInMillis, 0, ZoneOffset.UTC);
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDateTime);
     }
 
     protected String generateRandomDescription() {
-        String candidate = UUID.randomUUID().toString();
         return generateRandomString(120, 2);
     }
 
@@ -82,15 +95,6 @@ abstract class BaseSteps {
     protected String generateRandomCaloriesPerDay() {
         Integer cur = (int) (Math.random() * 9991) + 10;
         return cur.toString();
-    }
-
-    protected String generateRandomEmail() {
-        String candidate = UUID.randomUUID().toString();
-        if (candidate.matches("^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\\\.[A-Za-z0-9]+)*(\\\\.[A-Za-z]{2,})$"))
-            return candidate;
-        else {
-            throw new IllegalArgumentException("Wrong email format.");
-        }
     }
 
     protected String generateRandomName() {

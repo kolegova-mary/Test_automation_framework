@@ -17,8 +17,6 @@ Feature: Log into the application
     When user types '<email>' as email and '<password>' as password and hits Submit
     Then login error message is displayed
     Examples:
-      |email|password|
-      |qq  |qwe     |
-      |qw  |123     |
-      |za  |az      |
-      |qwer|tyuioiop|
+      | email          | password |
+      | qq             | qwe      |
+      | qcnkde@mail.ru | 123.№%,     |
