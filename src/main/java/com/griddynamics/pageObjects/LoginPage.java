@@ -24,8 +24,14 @@ public class LoginPage {
     @FindBy(xpath = "//button[contains(text(),\"Login as Admin\")]")
     private WebElement bToLoginAsAdmin;
 
-    public MealsPage login(String username, String password) {
-        tryLogin(username, password);
+    @FindBy(xpath = "//div[contains(@class,\"error\")]")
+    private WebElement lblError;
+
+    @FindBy(xpath = "//div[contains(@class,\"message\")]")
+    private WebElement tSuccessMessageRegistering;
+
+    public MealsPage login(String email, String password) {
+        tryLogin(email, password);
         return new MealsPage();
     }
 
@@ -37,6 +43,22 @@ public class LoginPage {
         txtPassword.sendKeys(password);
 
         btoSubmitLogin.click();
+    }
+
+    public String getMessageSuccessRegister() {
+        return tSuccessMessageRegistering.getText();
+    }
+
+    public WebElement getMessageWebElementSuccessRegister() {
+        return tSuccessMessageRegistering;
+    }
+
+    public String getErrorMessage() {
+        return lblError.getText();
+    }
+
+    public WebElement getErrorWebElement() {
+        return lblError;
     }
 
     public void toRegistration() {

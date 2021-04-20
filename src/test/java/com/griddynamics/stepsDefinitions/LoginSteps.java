@@ -1,26 +1,19 @@
 package com.griddynamics.stepsDefinitions;
 
 import com.griddynamics.pageObjects.LoginPage;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Login functionality related steps.
- */
 public class LoginSteps extends BaseSteps {
+    private static String SUCCESSFUL_REGISTRATION_MESSAGE_PREFIX = "You are registered. Please Sign in. ";
 
-    @Given("user opens Login page")
-    public void openLoginPage() throws Throwable {
-        getDriver().get(getData().loginPageUrl());
-    }
-
-    @When("user types '([^']+)' as loginname and '([^']+)' as password and hits Submit")
-    public void login(String username, String password) {
-        page().login(username, password);
+    @When("user types '([^']+)' as email and '([^']+)' as password and hits Submit")
+    public void login(String email, String password) {
+        page().login(email, password);
     }
 
     @When("user clicks on Registration")
@@ -28,29 +21,29 @@ public class LoginSteps extends BaseSteps {
         page().toRegistration();
     }
 
-    @Then("user goes to Restration page")
-    public void userOnRegistrationPage() {
-        assertCurrentPageUrl(getData().registrationPageUrl(), "No registration");
-    }
-
-    @When("User clicks Login as User")
+    @When("user clicks Login as User")
     public void mealsForUser() {
         page().toLoginAsUser();
     }
 
-    @Then("user goes to Meals page")
-    public void userOnMealsPage() {
-        assertCurrentPageUrl(getData().mealsPageUrl(), "No meals for user");
-    }
-
-    @When("User clicks Login as Admin")
+    @When("user clicks Login as Admin")
     public void mealsForAdmin() {
         page().toLoginAsAdmin();
     }
 
-    @Then("admin goes to Meals page")
-    public void adminOnMealsPage() {
-        assertCurrentPageUrl(getData().mealsPageUrl(), "No meals for admin");
+    @Then("login error message is displayed")
+    public void verifyErrorMessage() {
+        getWait().until(ExpectedConditions.visibilityOf(page().getErrorWebElement()));
+        String errorMessage = page().getErrorMessage();
+        assertEquals("Bad credentials", errorMessage);
+    }
+
+    @Then("Successful registration message is displayed")
+    public void verifySuccessfulRegistrationMessageIsDisplayed() {
+        getWait().until(ExpectedConditions.visibilityOf(page().getMessageWebElementSuccessRegister()));
+        assertThat(page().getMessageSuccessRegister().trim())
+                .as("Successful registration message was nor shown or had unexpected content.")
+                .startsWith(SUCCESSFUL_REGISTRATION_MESSAGE_PREFIX);
     }
 
     public LoginPage page() {

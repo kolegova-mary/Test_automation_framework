@@ -22,6 +22,7 @@ public class AddMealPopUp {
     public void typeInDate(String value) {
         typeIn(value, txtDate);
     }
+
     public void typeInDescription(String value) {
         typeIn(value, txtDescription);
     }
@@ -35,11 +36,11 @@ public class AddMealPopUp {
         targetElement.sendKeys(value);
     }
 
-    public void toLCancel() {
-        bToCancel.click();
-    }
-
     public void toSaveMeal() {
         bToSaveMeal.click();
+    }
+
+    public void toCancel() {
+        bToCancel.click();
     }
 }

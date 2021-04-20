@@ -8,7 +8,7 @@ public class AddUsersPopUp {
     @FindBy(id = "name")
     private WebElement name;
 
-    @FindBy(id="email")
+    @FindBy(id = "email")
     private WebElement email;
 
     @FindBy(id = "password")
@@ -37,11 +37,11 @@ public class AddUsersPopUp {
         targetElement.sendKeys(value);
     }
 
-    public void toLCancel() {
+    public void toCancel() {
         bToCancel.click();
     }
 
-    public void toSave() {
+    public void toSaveUser() {
         bToSaveUser.click();
     }
 }

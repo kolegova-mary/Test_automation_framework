@@ -1,11 +1,10 @@
 package com.griddynamics.stepsDefinitions;
 
 import com.griddynamics.pageObjects.MealsPage;
-import com.griddynamics.pageObjects.RegistrationPage;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.support.FindBy;
+
+import static org.junit.Assert.assertTrue;
 
 public class MealsSteps extends BaseSteps {
 
@@ -19,9 +18,9 @@ public class MealsSteps extends BaseSteps {
         page().toUsers();
     }
 
-    @Then("user goes to Users page")
-    public void adminOnUsersPage() {
-        assertCurrentPageUrl(getData().usersFromAdminPageUrl(), "No users for admin");
+    @Then("meal is in wrong format")
+    public void toDisplayWrongMeal() {
+        assertTrue(page().isWrongMeal());
     }
 
     private MealsPage page() {

@@ -15,8 +15,6 @@ import org.openqa.selenium.support.FindBy;
  */
 public class BasePage {
 
-    //TODO: Add more header/ footer elements.
-
     @FindBy(id = "sploggedInName")
     protected WebElement sploggedInName;
 

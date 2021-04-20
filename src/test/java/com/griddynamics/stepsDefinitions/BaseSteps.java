@@ -3,12 +3,11 @@ package com.griddynamics.stepsDefinitions;
 import com.griddynamics.tests.Hooks;
 import com.griddynamics.config.DataProvider;
 import com.griddynamics.config.TestDataAndProperties;
-import com.griddynamics.pageObjects.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -62,6 +61,14 @@ abstract class BaseSteps {
         }
     }
 
+    protected String generateDateString() {
+        long rangebegin = Timestamp.valueOf("2013-02-08 00:00").getTime();
+        long rangeend = Timestamp.valueOf("2013-02-08 00:58").getTime();
+        long diff = rangeend - rangebegin + 1;
+        Timestamp rand = new Timestamp(rangebegin + (long) (Math.random() * diff));
+        return rand.toString();
+    }
+
     protected String generateRandomDescription() {
         String candidate = UUID.randomUUID().toString();
         return generateRandomString(120, 2);
@@ -69,6 +76,11 @@ abstract class BaseSteps {
 
     protected String generateRandomCalories() {
         Integer cur = (int) (Math.random() * 4991) + 10;
+        return cur.toString();
+    }
+
+    protected String generateRandomCaloriesPerDay() {
+        Integer cur = (int) (Math.random() * 9991) + 10;
         return cur.toString();
     }
 
