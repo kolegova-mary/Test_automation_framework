@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Base class to contain common auxiliary methods for step definitions.
  */
 abstract class BaseSteps {
-
     private WebDriver driver = Hooks.driver;
     private WebDriverWait wait;
 

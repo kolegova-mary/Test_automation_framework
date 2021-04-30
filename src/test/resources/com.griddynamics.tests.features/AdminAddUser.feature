@@ -1,7 +1,7 @@
 Feature: Log as Admin
   As Admin I should be able to add a new user
 
-  @smoke @addUser
+  @addUser @smoke
   Scenario: Admin adds User
     Given open Login page
     When user clicks Login as Admin
@@ -14,7 +14,7 @@ Feature: Log as Admin
     And admin types in some random value for 'password' to add user
     And admin clicks save user
 
-  @smoke @addUser @invalid
+  @addUser @invalid @smoke
   Scenario Outline: Cannot add user using invalid format of name, email or calories
     Given open Login page
     When user clicks Login as Admin
@@ -33,7 +33,7 @@ Feature: Log as Admin
       | gjknfjcenrcfnerjnfieDSKhfierngviuenrgveocmnvksrnfkeirjgimrekngiojemosgmvkerngokemskfngoiersjgmvklersjngiok | dfddvnowejn@                                                                | njdT^&Gsjasb87gsghndBius8787yhd(&SW&hniujn |
       | ndjBHGUYE&HNjknbjksdnaljkniouhjy89yhUBjbjdhsbnjbjbjcaknjhbihubjinjiuhuijbhjkljwkmnkdlnjnknwjinjj,wmkl      | hekcl@.ru                                                                   | njdT^&Gsb87Bius8787yhd(&SW&hniujn          |
 
-  @smoke @addUser @invalid
+  @addUser @invalid @smoke
   Scenario: Cannot add user with empty data
     Given open Login page
     When user clicks Login as Admin

@@ -1,36 +1,37 @@
 package com.griddynamics.tests;
 
-;
-
 import com.griddynamics.config.DataProvider;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
+;
+
 
 /**
  * com.griddynamics.tests.Hooks are blocks of code that can run at various points in the Cucumber execution cycle.
  * They are typically used for setup and teardown of the environment before and after each scenario.
  */
 public class Hooks {
+    public static final String USERNAME = "Kolegova_Mary";
+    public static final String ACCESS_KEY = "072db102-ac52-401d-acc9-9f9896bcd9cb";
+    public static final String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.eu-central-1.saucelabs.com:443/wd/hub";
 
     public static WebDriver driver;
 
     @Before
-    public void doBefore() {
-        driver = createChromeDriver();
+    public void doBefore() throws MalformedURLException {
+        driver = createSauceLabsDriver();
         driver.manage().timeouts().implicitlyWait(DataProvider.get().implicitlyWait(), TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(DataProvider.get().pageLoadTimeout(), TimeUnit.SECONDS);
     }
@@ -50,15 +51,17 @@ public class Hooks {
         }
     }
 
-    private ChromeDriver createChromeDriver() {
+    private WebDriver createSauceLabsDriver() throws MalformedURLException {
         // SOme details:  https://github.com/bonigarcia/webdrivermanager/
-        ChromeOptions ops = new ChromeOptions();
-        ops.addArguments("--start-maximized");
-        ops.addArguments("--dns-prefetch-disable");
-        ops.addArguments("test-type");
-        ops.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
-        WebDriverManager.getInstance(CHROME).setup();
+        DesiredCapabilities caps = DesiredCapabilities.chrome();
+        caps.setCapability("platform", "Windows 10");
+        caps.setCapability("version", "latest");
 
-        return new ChromeDriver(ops);
+        WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
+
+        driver.get("http://topjava.herokuapp.com/login");
+        System.out.println("title of page is: " + driver.getTitle());
+
+        return driver;
     }
 }

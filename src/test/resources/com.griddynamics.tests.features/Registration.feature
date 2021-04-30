@@ -2,7 +2,7 @@ Feature: User registration
   As a guest user
   I should be able to register new user account(sign-up) and use it to login into the application
 
-  @signup
+  @signup @smoke
   Scenario: Guest user is able to register
     Given open Login page
     When user clicks on Registration
@@ -14,7 +14,7 @@ Feature: User registration
     And user clicks Save user
     Then Successful registration message is displayed
 
-  @signup @invalid
+  @signup @invalid @smoke
   Scenario: Guest user isn't able to register with empty data
     Given open Login page
     When user clicks on Registration
@@ -24,7 +24,7 @@ Feature: User registration
     And email is in wrong format
     And password is in wrong format
 
-  @signup @invalid
+  @signup @invalid @smoke
   Scenario Outline: Guest user isn't able to register with invalid data
     Given open Login page
     When user clicks on Registration
